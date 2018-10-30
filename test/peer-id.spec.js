@@ -86,12 +86,14 @@ describe('PeerId', () => {
     expect(id1.id).to.be.eql(id2.id)
   })
 
-  it('Works with default options', async () => {
+  it('Works with default options', async function () {
+    this.timeout(10000)
     const id = await PeerId.create()
     expect(id.toB58String().length).to.equal(46)
   })
 
-  it('Non-default # of bits', async () => {
+  it('Non-default # of bits', async function () {
+    this.timeout(1000 * 60)
     const shortId = await PeerId.create(testOpts)
     const longId = await PeerId.create({ bits: 1024 })
     expect(shortId.privKey.bytes.length).is.below(longId.privKey.bytes.length)
