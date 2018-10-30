@@ -120,7 +120,7 @@ class PeerId {
    */
   isValid () {
     // TODO: needs better checking
-    return !!(this.privKey &&
+    return Boolean(this.privKey &&
       this.privKey.public &&
       this.privKey.public.bytes &&
       Buffer.isBuffer(this.pubKey.bytes) &&
