@@ -52,17 +52,17 @@ describe('PeerId', () => {
   })
 
   it('recreate an Id from Hex string', async () => {
-    const id = await PeerId.createFromHexString(testIdHex)
+    const id = PeerId.createFromHexString(testIdHex)
     expect(testIdBytes).to.deep.equal(id.id)
   })
 
   it('Recreate an Id from a Buffer', async () => {
-    const id = await PeerId.createFromBytes(testIdBytes)
+    const id = PeerId.createFromBytes(testIdBytes)
     expect(testId.id).to.equal(id.toHexString())
   })
 
   it('Recreate a B58 String', async () => {
-    const id = await PeerId.createFromB58String(testIdB58String)
+    const id = PeerId.createFromB58String(testIdB58String)
     expect(testIdB58String).to.equal(id.toB58String())
   })
 
@@ -105,7 +105,7 @@ describe('PeerId', () => {
   })
 
   it('toBytes', async () => {
-    const id = await PeerId.createFromHexString(testIdHex)
+    const id = PeerId.createFromHexString(testIdHex)
     expect(id.toBytes().toString('hex')).to.equal(testIdBytes.toString('hex'))
   })
 
@@ -133,7 +133,7 @@ describe('PeerId', () => {
     it('only id', async () => {
       const key = await crypto.keys.generateKeyPair('RSA', 1024)
       const digest = await key.public.hash()
-      const id = await PeerId.createFromBytes(digest)
+      const id = PeerId.createFromBytes(digest)
       expect(id.privKey).to.not.exist()
       expect(id.pubKey).to.not.exist()
       const other = await PeerId.createFromJSON(id.toJSON())
@@ -162,23 +162,13 @@ describe('PeerId', () => {
   it('set privKey (invalid)', async () => {
     const peerId = await PeerId.create(testOpts)
     peerId.privKey = Buffer.from('bufff')
-
-    try {
-      peerId.isValid()
-    } catch (err) {
-      expect(err).to.exist()
-    }
+    expect(peerId.isValid()).to.equal(false)
   })
 
   it('set pubKey (invalid)', async () => {
     const peerId = await PeerId.create(testOpts)
     peerId.pubKey = Buffer.from('bufff')
-
-    try {
-      peerId.isValid()
-    } catch (err) {
-      expect(err).to.exist()
-    }
+    expect(peerId.isValid()).to.equal(false)
   })
 
   describe('returns error via cb instead of crashing', () => {

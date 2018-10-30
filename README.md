@@ -137,19 +137,19 @@ Returns `Promise<PeerId>`.
 
 Creates a Peer ID from hex string representing the key's multihash.
 
-Returns `Promise<PeerId>`.
+Returns `PeerId.
 
 ### `createFromBytes(buf)`
 
 Creates a Peer ID from a buffer representing the key's multihash.
 
-Returns `Promise<PeerId>`.
+Returns `PeerId`.
 
 ### `createFromB58String(str)`
 
 Creates a Peer ID from a Base58 string representing the key's multihash.
 
-Returns `Promise<PeerId>`.
+Returns `PeerId`.
 
 ### `createFromPubKey(pubKey)`
 

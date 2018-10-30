@@ -119,16 +119,12 @@ class PeerId {
    * Check if this PeerId instance is valid (privKey -> pubKey -> Id)
    */
   isValid () {
-    // TODO Needs better checking
-    if (this.privKey &&
+    // TODO: needs better checking
+    return !!(this.privKey &&
       this.privKey.public &&
       this.privKey.public.bytes &&
       Buffer.isBuffer(this.pubKey.bytes) &&
-      this.privKey.public.bytes.equals(this.pubKey.bytes)) {
-      return true
-    } else {
-      throw new Error('Keys not match')
-    }
+      this.privKey.public.bytes.equals(this.pubKey.bytes))
   }
 }
 
@@ -150,15 +146,15 @@ exports.create = async (opts) => {
   return new PeerIdWithIs(digest, key)
 }
 
-exports.createFromHexString = async (str) => {
+exports.createFromHexString = (str) => {
   return new PeerIdWithIs(mh.fromHexString(str))
 }
 
-exports.createFromBytes = async (buf) => {
+exports.createFromBytes = (buf) => {
   return new PeerIdWithIs(buf)
 }
 
-exports.createFromB58String = async (str) => {
+exports.createFromB58String = (str) => {
   return new PeerIdWithIs(mh.fromB58String(str))
 }
 
